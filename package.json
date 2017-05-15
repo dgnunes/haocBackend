@@ -1,0 +1,29 @@
+{
+  "name": "haocbackend",
+  "version": "1.0.0",
+  "description": "Teste de Implementação de REST API em NodeJS + MondoDB",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dgnunes/haocBackend.git"
+  },
+  "keywords": [
+    "haoc",
+    "node",
+    "mondoDB"
+  ],
+  "author": "douglas.godeguez@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dgnunes/haocBackend/issues"
+  },
+  "homepage": "https://github.com/dgnunes/haocBackend#readme",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "mongoose": "^4.9.9"
+  }
+}
