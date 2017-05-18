@@ -9,6 +9,7 @@
   "author": "douglas.godeguez@gmail.com",
   "license": "ISC",
   "dependencies": {
+    "autoenv": "^1.0.1",
     "body-parser": "^1.17.1",
     "express": "^4.15.3",
     "jsonwebtoken": "^7.4.1",
