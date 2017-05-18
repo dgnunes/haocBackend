@@ -3,9 +3,18 @@
 var List = require('./List');
 var User = require('../user/User');
 var Task = require('../task/Task');
+var token = require('../token');
 
 //POST CRIA UM NOVO REGISTRO
 exports.createList =  function(req,res){
+    try {
+        if (!token.verify(req)){
+            return res.status(401).send("Não autenticado.");        
+        }
+    } catch (err){
+        return res.status(401).send(err.message);        
+    }
+    
     console.log("CREATE LIST");
     User.findById(req.body.userid, function (err, user) {
         
@@ -39,6 +48,14 @@ exports.createList =  function(req,res){
 
 //GET Retorna todas as listas do usuário
 exports.getUserLists = function (req, res){
+    try {
+        if (!token.verify(req)){
+            return res.status(401).send("Não autenticado.");        
+        }
+    } catch (err){
+        return res.status(401).send(err.message);        
+    }
+
     console.log("GET LISTS");
     User.findById(req.params.userid, function (err, user) {
         console.log("INSIDE USERFINDBYID");
@@ -69,6 +86,14 @@ exports.getUserLists = function (req, res){
 
 //GET Retorna todas as listas do usuário
 exports.getList = function (req, res){
+    try {
+        if (!token.verify(req)){
+            return res.status(401).send("Não autenticado.");        
+        }
+    } catch (err){
+        return res.status(401).send(err.message);        
+    }
+
     console.log("GET LIST");
     List.findById(req.params.listid, function (err, list) {
         if (err){
@@ -91,6 +116,14 @@ exports.getList = function (req, res){
 
 //PUT faz update na lista
 exports.updateList = function (req, res){
+    try {
+        if (!token.verify(req)){
+            return res.status(401).send("Não autenticado.");        
+        }
+    } catch (err){
+        return res.status(401).send(err.message);        
+    }
+    
     console.log("UPDATE LIST");
     var newList = JSON.parse(req.body.list);
     List.findByIdAndUpdate(req.params.listid,newList,{new: true},function (err, list) {
@@ -114,6 +147,14 @@ exports.updateList = function (req, res){
 
 //PUT faz update na lista
 exports.deleteList = function (req, res){
+    try {
+        if (!token.verify(req)){
+            return res.status(401).send("Não autenticado.");        
+        }
+    } catch (err){
+        return res.status(401).send(err.message);        
+    }
+
     console.log("DELETE LIST");
     List.findByIdAndRemove(req.params.listid,function (err, list) {
         if (err){
