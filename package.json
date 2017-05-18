@@ -1,0 +1,17 @@
+{
+  "name": "testemongo",
+  "version": "1.0.0",
+  "description": "teste de conexao com mongodb",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "douglas.godeguez@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.3",
+    "jsonwebtoken": "^7.4.1",
+    "mongoose": "^4.9.9"
+  }
+}
