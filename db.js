@@ -10,4 +10,19 @@ mongostr += process.env.DB_HOST + ':' + process.env.DB_PORT +  '/' + process.env
 
 
 console.log(mongostr);
-mongoose.connect(mongostr);
+
+var connectWithRetry = function() {
+  var retry = 0;
+  return mongoose.connect(mongostr, function(err) {
+    if (err && (retry < 10)) {
+      console.error('Failed to connect to mongo on startup - retrying in 5 sec', err);
+      retry += 1;
+      setTimeout(connectWithRetry, 5000);
+    }
+  });
+};
+connectWithRetry();
+
+
+
+//mongoose.connect(mongostr);
