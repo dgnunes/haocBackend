@@ -1,18 +1,9 @@
 //TaskController.js
 var Task = require('./Task');
 var List = require('../list/List');
-var token = require('../token');
 
 //POST CRIA UM NOVO REGISTRO
 exports.createTask =  function(req,res){
-    try {
-        if (!token.verify(req)){
-            return res.status(401).send("Não autenticado.");        
-        }
-    } catch (err){
-        return res.status(401).send(err.message);        
-    }
-
     console.log("CREATE TASK");
     List.findById(req.body.listid, function (err, list) {
         if (err) 
@@ -49,14 +40,6 @@ exports.createTask =  function(req,res){
 }
 
 exports.updateTask =  function(req,res){
-    try {
-        if (!token.verify(req)){
-            return res.status(401).send("Não autenticado.");        
-        }
-    } catch (err){
-        return res.status(401).send(err.message);        
-    }    
-    
     console.log("UPDATE TASK");
     var newTask = JSON.parse(req.body.task);
     Task.findByIdAndUpdate(req.params.taskid,newTask,{new: true}, function (err, task) {
@@ -81,14 +64,6 @@ exports.updateTask =  function(req,res){
 }
 
 exports.deleteTask =  function(req,res){
-    try {
-        if (!token.verify(req)){
-            return res.status(401).send("Não autenticado.");        
-        }
-    } catch (err){
-        return res.status(401).send(err.message);        
-    }
-
     console.log("DELETE TASK");
     Task.findByIdAndRemove(req.params.taskid,function (err, task) {
         if (err) 
