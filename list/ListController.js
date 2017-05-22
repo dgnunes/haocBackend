@@ -11,10 +11,10 @@ exports.createList =  function(req,res){
     User.findById(req.body.userid, function (err, user) {
         
         if (err) 
-            return res.status(500).send("Não foi possível encontrar este usuário.");
+            return res.status(500).json({success: false, msg: "Não foi possível encontrar este usuário."});
 
         if (!user) 
-            return res.status(404).send("Usuário não encontrado.");
+            return res.status(404).json({success: false, msg: "Usuário não encontrado."});
 
         List.create({
             _creator: user,
@@ -22,10 +22,10 @@ exports.createList =  function(req,res){
         },function (err, list){
             if(err){
                 if (err.code == 11000){
-                    return res.status(403).send("Este nome de lista já está Cadastrado.");    
+                    return res.status(403).json({success: false, msg: "Este nome de lista já está Cadastrado."});    
                 }
                 console.log(err);
-                return res.status(500).send("Houve um problema ao criar uma Lista.");
+                return res.status(500).json({success: false, msg: "Houve um problema ao criar uma Lista."});
             }
             
             res.json({
@@ -45,18 +45,14 @@ exports.getUserLists = function (req, res){
         console.log("INSIDE USERFINDBYID");
 
         if (err) 
-            return res.status(500).send("Não foi possível encontrar este usuário.");
+            return res.status(500).json({success: false, msg: "Não foi possível encontrar este usuário."});
 
         if (!user) 
-            return res.status(404).send("Usuário não encontrado.");
+            return res.status(404).json({success: false, msg: "Usuário não encontrado."});
 
         List.find({_creator: user}, function (err, lists) {
             if (err){
-                return res.status(500).send("Houve um problema ao procurar as Listas.");
-            }
-
-            if (lists == null) {
-                return res.status(404).send("Não há listas cadastradas.");
+                return res.status(500).json({success: false, msg: "Houve um problema ao procurar as Listas."});
             }
 
             res.json({
@@ -73,11 +69,11 @@ exports.getList = function (req, res){
     console.log("GET LIST");
     List.findById(req.params.listid, function (err, list) {
         if (err){
-            return res.status(500).send("Houve um problema ao procurar as Listas.");
+            return res.status(500).json({success: false, msg: "Houve um problema ao procurar as Listas."});
         }
 
         if (list == null) {
-            return res.status(404).send("Não há listas cadastradas.");
+            return res.status(404).json({success: false, msg: "Não há listas cadastradas."});
         }
 
         list.populate("tasks",function(err,l){
@@ -97,11 +93,11 @@ exports.updateList = function (req, res){
     List.findByIdAndUpdate(req.params.listid,newList,{new: true},function (err, list) {
         if (err){
             console.log(err);
-            return res.status(500).send("Houve um problema ao atualizar a Lista.");
+            return res.status(500).json({success: false, msg: "Houve um problema ao atualizar a Lista."});
         }
 
         if (list == null) {
-            return res.status(404).send("Não encontramos essa lista.");
+            return res.status(404).json({success: false, msg: "Não encontramos essa lista."});
         }
 
         list.populate("tasks",function(err,l){
@@ -119,16 +115,16 @@ exports.deleteList = function (req, res){
     List.findByIdAndRemove(req.params.listid,function (err, list) {
         if (err){
             console.log(err);
-            return res.status(500).send("Houve um problema ao remover a Lista.");
+            return res.status(500).json({success: false, msg: "Houve um problema ao remover a Lista."});
         }
 
         if (list == null) {
-            return res.status(404).send("Não encontramos essa lista.");
+            return res.status(404).json({success: false, msg: "Não encontramos essa lista."});
         }
 
         Task.remove({ _parent: list }, function (err) {
             if (err) 
-                return res.status(500).send("Não foi possível apagar as tarefas associadas");
+                return res.status(500).json({success: false, msg: "Não foi possível apagar as tarefas associadas"});
 
             res.json({
                 success: true

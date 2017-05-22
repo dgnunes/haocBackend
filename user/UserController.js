@@ -20,7 +20,7 @@ exports.createUser = function (req, res) {
         function (err, user) {
             if (err) {
                 if (11000 === err.code || 11001 === err.code) {
-	                return res.status(403).json({success: false, msg: "Favor fornecer outro email."});
+	                return res.status(403).json({success: false, msg: "Dados inválidos."});
 	            }
 
                 return res.status(500).json({success: false, msg: "Houve um problema ao adicionar um Usuário ao Banco de Dados."});
@@ -38,14 +38,12 @@ exports.createUser = function (req, res) {
 }
 
 exports.login = function (req,res) {
+    console.log("LOGIN");
+    console.log(req.body);
     User.findOne({username: req.body.username}, function(err, user) {
         if (err) {
-            if (11000 === err.code || 11001 === err.code) {
-                return res.status(403).json({success: false, msg: "Favor fornecer outro email."});
-            } else {
-                console.log(err);
-                return res.status(500).json({success: false, msg: "Houve um problema ao localizar este Usuário no Banco de Dados."});
-            }
+            console.log(err);
+            return res.status(500).json({success: false, msg: "Houve um problema ao localizar este Usuário no Banco de Dados."});
         }
 
         if (user === null){

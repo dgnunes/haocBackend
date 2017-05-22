@@ -1,0 +1,771 @@
+FORMAT: 1A
+
+# haocBackend
+Test Project for Backend developer at HAOC
+
+# Goup User
+
+## Create User [POST /user]
+You may create your own user using this action. It takes a JSON object
+containing a username, password and email.
+
++ Request (application/json)
+
+        { 
+            username: "admin",
+            password: "admin",
+            email: "douglas.godeguez@gmail.com"
+        }
+
++ Response 200 (application/json)
+
+        {
+        "success": true,
+        "user": {
+            "__v": 0,
+            "username": "admin",
+            "password": "efa39dd1d9fe",
+            "email": "douglas.godeguez2@gmail.com",
+            "_id": "591f473594fc3770e888b4a2"
+            }
+        }
+
++ Response 403 (application/json)
+
+        {
+        "success": false,
+        "msg": "Dados inválidos."
+        }
+
++ Response 500 (application/json)
+
+        {
+        "success": false,
+        "msg": "Houve um problema ao adicionar um Usuário ao Banco de Dados."
+        }
+
+
+## Login User [POST /user/login]
+You may login your own user using this action. It takes a JSON object
+containing a username, password and email.
+
++ Request (application/json)
+
+        { 
+        "username": 'admin',
+        "password": 'admin'
+        }
+
++ Response 200 (application/json)
+
+        {
+        "success": true,
+        "userid": "591f233c68d78e63cc1f1f9b",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyIkX18iOnsic3RyaWN0TW9kZSI6dHJ1ZSwic2VsZWN0ZWQiOnt9LCJnZXR0ZXJzIjp7fSwid2FzUG9wdWxhdGVkIjpmYWxzZSwiYWN0aXZlUGF0aHMiOnsicGF0aHMiOnsiZW1haWwiOiJpbml0IiwicGFzc3dvcmQiOiJpbml0IiwidXNlcm5hbWUiOiJpbml0IiwiX192IjoiaW5pdCIsIl9pZCI6ImluaXQifSwic3RhdGVzIjp7Imlnbm9yZSI6e30sImRlZmF1bHQiOnt9LCJpbml0Ijp7Il9fdiI6dHJ1ZSwiZW1haWwiOnRydWUsInBhc3N3b3JkIjp0cnVlLCJ1c2VybmFtZSI6dHJ1ZSwiX2lkIjp0cnVlfSwibW9kaWZ5Ijp7fSwicmVxdWlyZSI6e319LCJzdGF0ZU5hbWVzIjpbInJlcXVpcmUiLCJtb2RpZnkiLCJpbml0IiwiZGVmYXVsdCIsImlnbm9yZSJdfSwiZW1pdHRlciI6eyJkb21haW4iOm51bGwsIl9ldmVudHMiOnt9LCJfZXZlbnRzQ291bnQiOjAsIl9tYXhMaXN0ZW5lcnMiOjB9fSwiaXNOZXciOmZhbHNlLCJfZG9jIjp7Il9fdiI6MCwiZW1haWwiOiJkb3VnbGFzLmdvZGVndWV6QGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiZWZhMzlkZDFkOSIsInVzZXJuYW1lIjoiYWRtaW4iLCJfaWQiOiI1OTFmMjMzYzY4ZDc4ZTYzY2MxZjFmOWIifSwiaWF0IjoxNDk1NDQzMjU0LCJleHAiOjE0OTU0NDQxNTR9.JhLJco5H68-icPEyGvT4WZhcmI9dCkuEELp3T-Ys52Q"
+        }
+
++ Response 404 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Usuário ou senha inválida."
+        }
+
++ Response 500 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Houve um problema ao localizar este Usuário no Banco de Dados."
+        }
+
+# Group List
+
+## Create List [POST /list]
+You may create a list for your user using this action. 
+
++ Request (application/json)
+    + Header
+        
+            'x-access-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyIkX18iOnsic3RyaWN0TW9kZSI6dHJ1ZSwic2VsZWN0ZWQiOnt9LCJnZXR0ZXJzIjp7fSwid2FzUG9wdWxhdGVkIjpmYWxzZSwiYWN0aXZlUGF0aHMiOnsicGF0aHMiOnsiZW1haWwiOiJpbml0IiwicGFzc3dvcmQiOiJpbml0IiwidXNlcm5hbWUiOiJpbml0IiwiX192IjoiaW5pdCIsIl9pZCI6ImluaXQifSwic3RhdGVzIjp7Imlnbm9yZSI6e30sImRlZmF1bHQiOnt9LCJpbml0Ijp7Il9fdiI6dHJ1ZSwiZW1haWwiOnRydWUsInBhc3N3b3JkIjp0cnVlLCJ1c2VybmFtZSI6dHJ1ZSwiX2lkIjp0cnVlfSwibW9kaWZ5Ijp7fSwicmVxdWlyZSI6e319LCJzdGF0ZU5hbWVzIjpbInJlcXVpcmUiLCJtb2RpZnkiLCJpbml0IiwiZGVmYXVsdCIsImlnbm9yZSJdfSwiZW1pdHRlciI6eyJkb21haW4iOm51bGwsIl9ldmVudHMiOnt9LCJfZXZlbnRzQ291bnQiOjAsIl9tYXhMaXN0ZW5lcnMiOjB9fSwiaXNOZXciOmZhbHNlLCJfZG9jIjp7Il9fdiI6MCwiZW1haWwiOiJkb3VnbGFzLmdvZGVndWV6QGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiZWZhMzlkZDFkOSIsInVzZXJuYW1lIjoiYWRtaW4iLCJfaWQiOiI1OTFmMjMzYzY4ZDc4ZTYzY2MxZjFmOWIifSwiaWF0IjoxNDk1NDQ0MjA5LCJleHAiOjE0OTU0NDUxMDl9.rBQYRu2ibT4SN7NH1K1mkS6jImlRZPtVv1xvxNrQzNA',
+            'content-type': 'application/x-www-form-urlencoded' 
+
+    + Body
+    
+            { 
+            userid: '591f233c68d78e63cc1f1f9b',
+            name: 'LISTA TO TEST' 
+            }
+
++ Response 200 (application/json)
+        
+        {
+        "success": true,
+        "list": {
+            "__v": 0,
+            "_creator": {
+            "_id": "591f233c68d78e63cc1f1f9b",
+            "username": "admin",
+            "password": "efa39dd1d9",
+            "email": "douglas.godeguez@gmail.com",
+            "__v": 0
+            },
+            "name": "LISTA TO TEST",
+            "_id": "5922acade16cce413176e131",
+            "tasks": []
+            }
+        }
+
++ Response 401 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Token expirou prazo de " + duration + " segundos."
+        }
+
++ Response 401 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Token inválido.."
+        }
+
++ Response 401 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Token não autenticado."
+        }
+
++ Response 401 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Token não encontrado."
+        }
+
++ Response 404 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Usuário não encontrado."
+        }
+        
++ Response 403 (application/json)
+
+        {
+        "success": false,
+        "msg": "Este nome de lista já está Cadastrado."
+        }
+
++ Response 500 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Houve um problema ao criar uma Lista."
+        }
+
++ Response 500 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Não foi possível encontrar este usuário."
+        }
+
+## List methods [/list/{listid}]
+
+### Find List [GET]
+You may find a previously created list from your user using this action. 
+
++ Request (application/json)
+    + Header
+        
+            'x-access-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyIkX18iOnsic3RyaWN0TW9kZSI6dHJ1ZSwic2VsZWN0ZWQiOnt9LCJnZXR0ZXJzIjp7fSwid2FzUG9wdWxhdGVkIjpmYWxzZSwiYWN0aXZlUGF0aHMiOnsicGF0aHMiOnsiZW1haWwiOiJpbml0IiwicGFzc3dvcmQiOiJpbml0IiwidXNlcm5hbWUiOiJpbml0IiwiX192IjoiaW5pdCIsIl9pZCI6ImluaXQifSwic3RhdGVzIjp7Imlnbm9yZSI6e30sImRlZmF1bHQiOnt9LCJpbml0Ijp7Il9fdiI6dHJ1ZSwiZW1haWwiOnRydWUsInBhc3N3b3JkIjp0cnVlLCJ1c2VybmFtZSI6dHJ1ZSwiX2lkIjp0cnVlfSwibW9kaWZ5Ijp7fSwicmVxdWlyZSI6e319LCJzdGF0ZU5hbWVzIjpbInJlcXVpcmUiLCJtb2RpZnkiLCJpbml0IiwiZGVmYXVsdCIsImlnbm9yZSJdfSwiZW1pdHRlciI6eyJkb21haW4iOm51bGwsIl9ldmVudHMiOnt9LCJfZXZlbnRzQ291bnQiOjAsIl9tYXhMaXN0ZW5lcnMiOjB9fSwiaXNOZXciOmZhbHNlLCJfZG9jIjp7Il9fdiI6MCwiZW1haWwiOiJkb3VnbGFzLmdvZGVndWV6QGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiZWZhMzlkZDFkOSIsInVzZXJuYW1lIjoiYWRtaW4iLCJfaWQiOiI1OTFmMjMzYzY4ZDc4ZTYzY2MxZjFmOWIifSwiaWF0IjoxNDk1NDQ0MjA5LCJleHAiOjE0OTU0NDUxMDl9.rBQYRu2ibT4SN7NH1K1mkS6jImlRZPtVv1xvxNrQzNA',
+
++ Response 200 (application/json)
+
+        {
+        "success": true,
+        "list": {
+            "_id": "5922acade16cce413176e131",
+            "_creator": "591f233c68d78e63cc1f1f9b",
+            "name": "LISTA TO TEST",
+            "__v": 0,
+            "tasks": []
+            }
+        }
+
++ Response 401 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Token expirou prazo de " + duration + " segundos."
+        }
+
++ Response 401 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Token inválido.."
+        }
+
++ Response 401 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Token não autenticado."
+        }
+
++ Response 401 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Token não encontrado."
+        }
+        
++ Response 500 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Houve um problema ao procurar as Listas."
+        }
+
++ Response 500 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Não há listas cadastradas."
+        }
+
+### Update List [PUT]
+You may modify a previously created list from your user using this action. 
+
++ Request (application/json)
+    + Header
+
+            'content-type': 'application/x-www-form-urlencoded'
+            'x-access-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyIkX18iOnsic3RyaWN0TW9kZSI6dHJ1ZSwic2VsZWN0ZWQiOnt9LCJnZXR0ZXJzIjp7fSwid2FzUG9wdWxhdGVkIjpmYWxzZSwiYWN0aXZlUGF0aHMiOnsicGF0aHMiOnsiZW1haWwiOiJpbml0IiwicGFzc3dvcmQiOiJpbml0IiwidXNlcm5hbWUiOiJpbml0IiwiX192IjoiaW5pdCIsIl9pZCI6ImluaXQifSwic3RhdGVzIjp7Imlnbm9yZSI6e30sImRlZmF1bHQiOnt9LCJpbml0Ijp7Il9fdiI6dHJ1ZSwiZW1haWwiOnRydWUsInBhc3N3b3JkIjp0cnVlLCJ1c2VybmFtZSI6dHJ1ZSwiX2lkIjp0cnVlfSwibW9kaWZ5Ijp7fSwicmVxdWlyZSI6e319LCJzdGF0ZU5hbWVzIjpbInJlcXVpcmUiLCJtb2RpZnkiLCJpbml0IiwiZGVmYXVsdCIsImlnbm9yZSJdfSwiZW1pdHRlciI6eyJkb21haW4iOm51bGwsIl9ldmVudHMiOnt9LCJfZXZlbnRzQ291bnQiOjAsIl9tYXhMaXN0ZW5lcnMiOjB9fSwiaXNOZXciOmZhbHNlLCJfZG9jIjp7Il9fdiI6MCwiZW1haWwiOiJkb3VnbGFzLmdvZGVndWV6QGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiZWZhMzlkZDFkOSIsInVzZXJuYW1lIjoiYWRtaW4iLCJfaWQiOiI1OTFmMjMzYzY4ZDc4ZTYzY2MxZjFmOWIifSwiaWF0IjoxNDk1NDQ0MjA5LCJleHAiOjE0OTU0NDUxMDl9.rBQYRu2ibT4SN7NH1K1mkS6jImlRZPtVv1xvxNrQzNA',
+
+    + Body
+
+            {
+            "_id":"5922acade16cce413176e131",
+            "name":"ListaATUALIZADA4",
+            "__v":0,
+            "tasks":[]
+            }
+
++ Response 200 (application/json)
+
+        {
+        "success": true,
+        "list": {
+            "_id": "5922acade16cce413176e131",
+            "_creator": "591f233c68d78e63cc1f1f9b",
+            "name": "ListaATUALIZADA4",
+            "__v": 0,
+            "tasks": []
+            }
+        }
+
++ Response 401 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Token expirou prazo de " + duration + " segundos."
+        }
+
++ Response 401 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Token inválido.."
+        }
+
++ Response 401 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Token não autenticado."
+        }
+
++ Response 401 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Token não encontrado."
+        }
+
++ Response 500 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Houve um problema ao atualizar a Lista."
+        }
+
++ Response 404 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Não encontramos essa lista."
+        }
+
+### Delete List [DELETE]
+You may modify a previously created list from your user using this action. 
+
++ Request (application/json)
+    + Header
+
+            'x-access-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyIkX18iOnsic3RyaWN0TW9kZSI6dHJ1ZSwic2VsZWN0ZWQiOnt9LCJnZXR0ZXJzIjp7fSwid2FzUG9wdWxhdGVkIjpmYWxzZSwiYWN0aXZlUGF0aHMiOnsicGF0aHMiOnsiZW1haWwiOiJpbml0IiwicGFzc3dvcmQiOiJpbml0IiwidXNlcm5hbWUiOiJpbml0IiwiX192IjoiaW5pdCIsIl9pZCI6ImluaXQifSwic3RhdGVzIjp7Imlnbm9yZSI6e30sImRlZmF1bHQiOnt9LCJpbml0Ijp7Il9fdiI6dHJ1ZSwiZW1haWwiOnRydWUsInBhc3N3b3JkIjp0cnVlLCJ1c2VybmFtZSI6dHJ1ZSwiX2lkIjp0cnVlfSwibW9kaWZ5Ijp7fSwicmVxdWlyZSI6e319LCJzdGF0ZU5hbWVzIjpbInJlcXVpcmUiLCJtb2RpZnkiLCJpbml0IiwiZGVmYXVsdCIsImlnbm9yZSJdfSwiZW1pdHRlciI6eyJkb21haW4iOm51bGwsIl9ldmVudHMiOnt9LCJfZXZlbnRzQ291bnQiOjAsIl9tYXhMaXN0ZW5lcnMiOjB9fSwiaXNOZXciOmZhbHNlLCJfZG9jIjp7Il9fdiI6MCwiZW1haWwiOiJkb3VnbGFzLmdvZGVndWV6QGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiZWZhMzlkZDFkOSIsInVzZXJuYW1lIjoiYWRtaW4iLCJfaWQiOiI1OTFmMjMzYzY4ZDc4ZTYzY2MxZjFmOWIifSwiaWF0IjoxNDk1NDQ0MjA5LCJleHAiOjE0OTU0NDUxMDl9.rBQYRu2ibT4SN7NH1K1mkS6jImlRZPtVv1xvxNrQzNA',
+
++ Response 200 (application/json)
+
+        {
+        "success": true
+        }
+
++ Response 401 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Token expirou prazo de " + duration + " segundos."
+        }
+
++ Response 401 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Token inválido.."
+        }
+
++ Response 401 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Token não autenticado."
+        }
+
++ Response 401 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Token não encontrado."
+        }
+
++ Response 404 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Não encontramos essa lista."
+        }
+
++ Response 500 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Houve um problema ao remover a Lista."
+        }
+
++ Response 500 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Não foi possível apagar as tarefas associadas."
+        }
+
+## Find User Lists [GET /list/{userid}]
+You may find all lists created from your user using this action. 
+
++ Request (application/json)
+    + Header
+        
+            'x-access-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyIkX18iOnsic3RyaWN0TW9kZSI6dHJ1ZSwic2VsZWN0ZWQiOnt9LCJnZXR0ZXJzIjp7fSwid2FzUG9wdWxhdGVkIjpmYWxzZSwiYWN0aXZlUGF0aHMiOnsicGF0aHMiOnsiZW1haWwiOiJpbml0IiwicGFzc3dvcmQiOiJpbml0IiwidXNlcm5hbWUiOiJpbml0IiwiX192IjoiaW5pdCIsIl9pZCI6ImluaXQifSwic3RhdGVzIjp7Imlnbm9yZSI6e30sImRlZmF1bHQiOnt9LCJpbml0Ijp7Il9fdiI6dHJ1ZSwiZW1haWwiOnRydWUsInBhc3N3b3JkIjp0cnVlLCJ1c2VybmFtZSI6dHJ1ZSwiX2lkIjp0cnVlfSwibW9kaWZ5Ijp7fSwicmVxdWlyZSI6e319LCJzdGF0ZU5hbWVzIjpbInJlcXVpcmUiLCJtb2RpZnkiLCJpbml0IiwiZGVmYXVsdCIsImlnbm9yZSJdfSwiZW1pdHRlciI6eyJkb21haW4iOm51bGwsIl9ldmVudHMiOnt9LCJfZXZlbnRzQ291bnQiOjAsIl9tYXhMaXN0ZW5lcnMiOjB9fSwiaXNOZXciOmZhbHNlLCJfZG9jIjp7Il9fdiI6MCwiZW1haWwiOiJkb3VnbGFzLmdvZGVndWV6QGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiZWZhMzlkZDFkOSIsInVzZXJuYW1lIjoiYWRtaW4iLCJfaWQiOiI1OTFmMjMzYzY4ZDc4ZTYzY2MxZjFmOWIifSwiaWF0IjoxNDk1NDQ0MjA5LCJleHAiOjE0OTU0NDUxMDl9.rBQYRu2ibT4SN7NH1K1mkS6jImlRZPtVv1xvxNrQzNA',
+
++ Response 200 (application/json)
+
+        {
+        "success": true,
+        "lists": [
+            {
+            "_id": "5922ba32e16cce413176e132",
+            "_creator": "591f233c68d78e63cc1f1f9b",
+            "name": "LISTA TO TEST",
+            "__v": 0,
+            "tasks": []
+            },
+            {
+            "_id": "5922ba39e16cce413176e133",
+            "_creator": "591f233c68d78e63cc1f1f9b",
+            "name": "LISTA TO TEST2",
+            "__v": 0,
+            "tasks": []
+            },
+            {
+            "_id": "5922ba3de16cce413176e134",
+            "_creator": "591f233c68d78e63cc1f1f9b",
+            "name": "LISTA TO TEST3",
+            "__v": 0,
+            "tasks": []
+            }
+            ]
+        }
+
++ Response 401 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Token expirou prazo de " + duration + " segundos."
+        }
+
++ Response 401 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Token inválido.."
+        }
+
++ Response 401 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Token não autenticado."
+        }
+
++ Response 401 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Token não encontrado."
+        }
+
++ Response 404 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Usuário não encontrado."
+        }
+
+
++ Response 500 (application/json)
+
+        {
+        "success": false,
+        "msg": "Não foi possível encontrar este usuário."
+        }
+
++ Response 500 (application/json)
+
+        {
+        "success": false,
+        "msg": "Houve um problema ao procurar as Listas."
+        }
+
++ Response 401 (application/json)
+
+        {
+        "success": false,
+        "msg": "Token não encontrado."
+        }
+
+# Group Task 
+
+## Create Task [POST /task]
+
++ Request (application/json)
+    + Header
+        
+            'x-access-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyIkX18iOnsic3RyaWN0TW9kZSI6dHJ1ZSwic2VsZWN0ZWQiOnt9LCJnZXR0ZXJzIjp7fSwid2FzUG9wdWxhdGVkIjpmYWxzZSwiYWN0aXZlUGF0aHMiOnsicGF0aHMiOnsiZW1haWwiOiJpbml0IiwicGFzc3dvcmQiOiJpbml0IiwidXNlcm5hbWUiOiJpbml0IiwiX192IjoiaW5pdCIsIl9pZCI6ImluaXQifSwic3RhdGVzIjp7Imlnbm9yZSI6e30sImRlZmF1bHQiOnt9LCJpbml0Ijp7Il9fdiI6dHJ1ZSwiZW1haWwiOnRydWUsInBhc3N3b3JkIjp0cnVlLCJ1c2VybmFtZSI6dHJ1ZSwiX2lkIjp0cnVlfSwibW9kaWZ5Ijp7fSwicmVxdWlyZSI6e319LCJzdGF0ZU5hbWVzIjpbInJlcXVpcmUiLCJtb2RpZnkiLCJpbml0IiwiZGVmYXVsdCIsImlnbm9yZSJdfSwiZW1pdHRlciI6eyJkb21haW4iOm51bGwsIl9ldmVudHMiOnt9LCJfZXZlbnRzQ291bnQiOjAsIl9tYXhMaXN0ZW5lcnMiOjB9fSwiaXNOZXciOmZhbHNlLCJfZG9jIjp7Il9fdiI6MCwiZW1haWwiOiJkb3VnbGFzLmdvZGVndWV6QGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiZWZhMzlkZDFkOSIsInVzZXJuYW1lIjoiYWRtaW4iLCJfaWQiOiI1OTFmMjMzYzY4ZDc4ZTYzY2MxZjFmOWIifSwiaWF0IjoxNDk1NDQ0MjA5LCJleHAiOjE0OTU0NDUxMDl9.rBQYRu2ibT4SN7NH1K1mkS6jImlRZPtVv1xvxNrQzNA',
+            'content-type': 'application/x-www-form-urlencoded' 
+
+    + Body
+    
+            { description: 'taskExists1',
+            userid: '591f233c68d78e63cc1f1f9b',
+            listid: '5922ba39e16cce413176e133' 
+            }
+
++ Response 200 (application/json)
+        
+        {
+        "success": true,
+        "list": {
+            "_id": "5922ba39e16cce413176e133",
+            "_creator": "591f233c68d78e63cc1f1f9b",
+            "name": "LISTA TO TEST2",
+            "__v": 0,
+            "tasks": [
+            {
+                "_id": "5922bf80e16cce413176e135",
+                "_parent": "5922ba39e16cce413176e133",
+                "description": "taskExists1",
+                "__v": 0,
+                "status": [
+                "pending"
+                ],
+                "Created_date": "2017-05-22T10:37:52.721Z"
+                }
+                ]
+            }
+        }
+
++ Response 401 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Token expirou prazo de " + duration + " segundos."
+        }
+
++ Response 401 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Token inválido.."
+        }
+
++ Response 401 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Token não autenticado."
+        }
+
++ Response 401 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Token não encontrado."
+        }
+
++ Response 403 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Usuário inválido."
+        }
+
++ Response 404 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Lista não encontrada."
+        }
+
++ Response 500 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Não foi possível encontrar esta lista."
+        }
+
++ Response 500 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Houve um problema ao criar uma Tarefa."
+        }
+
+## Task Methods [/task/{taskid}]
+
+### Update Task [PUT]
+
++ Request (application/json)
+    + Header
+        
+            'x-access-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyIkX18iOnsic3RyaWN0TW9kZSI6dHJ1ZSwic2VsZWN0ZWQiOnt9LCJnZXR0ZXJzIjp7fSwid2FzUG9wdWxhdGVkIjpmYWxzZSwiYWN0aXZlUGF0aHMiOnsicGF0aHMiOnsiZW1haWwiOiJpbml0IiwicGFzc3dvcmQiOiJpbml0IiwidXNlcm5hbWUiOiJpbml0IiwiX192IjoiaW5pdCIsIl9pZCI6ImluaXQifSwic3RhdGVzIjp7Imlnbm9yZSI6e30sImRlZmF1bHQiOnt9LCJpbml0Ijp7Il9fdiI6dHJ1ZSwiZW1haWwiOnRydWUsInBhc3N3b3JkIjp0cnVlLCJ1c2VybmFtZSI6dHJ1ZSwiX2lkIjp0cnVlfSwibW9kaWZ5Ijp7fSwicmVxdWlyZSI6e319LCJzdGF0ZU5hbWVzIjpbInJlcXVpcmUiLCJtb2RpZnkiLCJpbml0IiwiZGVmYXVsdCIsImlnbm9yZSJdfSwiZW1pdHRlciI6eyJkb21haW4iOm51bGwsIl9ldmVudHMiOnt9LCJfZXZlbnRzQ291bnQiOjAsIl9tYXhMaXN0ZW5lcnMiOjB9fSwiaXNOZXciOmZhbHNlLCJfZG9jIjp7Il9fdiI6MCwiZW1haWwiOiJkb3VnbGFzLmdvZGVndWV6QGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiZWZhMzlkZDFkOSIsInVzZXJuYW1lIjoiYWRtaW4iLCJfaWQiOiI1OTFmMjMzYzY4ZDc4ZTYzY2MxZjFmOWIifSwiaWF0IjoxNDk1NDQ0MjA5LCJleHAiOjE0OTU0NDUxMDl9.rBQYRu2ibT4SN7NH1K1mkS6jImlRZPtVv1xvxNrQzNA',
+            'content-type': 'application/x-www-form-urlencoded' 
+
+    + Body
+    
+            {
+            "_id": "5922c181e16cce413176e136",
+            "_parent": "5922ba39e16cce413176e133",
+            "description": "taskUpdated",
+            "__v": 0,
+            "status": [
+                "ongoing"
+            ],
+            "Created_date": "2017-05-22T10:37:52.721Z"
+            }
+
++ Response 200 (application/json)
+        
+            {
+            "success": true,
+            "list": {
+                "_id": "5922ba39e16cce413176e133",
+                "_creator": "591f233c68d78e63cc1f1f9b",
+                "name": "LISTA TO TEST2",
+                "__v": 2,
+                "tasks": [
+                {
+                    "_id": "5922bf80e16cce413176e135",
+                    "_parent": "5922ba39e16cce413176e133",
+                    "description": "taskExists1",
+                    "__v": 0,
+                    "status": [
+                    "pending"
+                    ],
+                    "Created_date": "2017-05-22T10:37:52.721Z"
+                },
+                {
+                    "_id": "5922c181e16cce413176e136",
+                    "_parent": "5922ba39e16cce413176e133",
+                    "description": "taskUpdated",
+                    "__v": 0,
+                    "status": [
+                    "ongoing"
+                    ],
+                    "Created_date": "2017-05-22T10:37:52.721Z"
+                }
+                ]
+            }
+            }
+
++ Response 401 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Token expirou prazo de " + duration + " segundos."
+        }
+
++ Response 401 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Token inválido.."
+        }
+
++ Response 401 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Token não autenticado."
+        }
+
++ Response 401 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Token não encontrado."
+        }
+
++ Response 404 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Tarefa não encontrada."
+        }
+
++ Response 500 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Não foi possível encontrar esta tarefa."
+        }
+
++ Response 500 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Não foi possível encontrar esta Lista."
+        }
+
+### Delete Task [DELETE]
+
++ Request (application/json)
+    + Header
+        
+            'x-access-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyIkX18iOnsic3RyaWN0TW9kZSI6dHJ1ZSwic2VsZWN0ZWQiOnt9LCJnZXR0ZXJzIjp7fSwid2FzUG9wdWxhdGVkIjpmYWxzZSwiYWN0aXZlUGF0aHMiOnsicGF0aHMiOnsiZW1haWwiOiJpbml0IiwicGFzc3dvcmQiOiJpbml0IiwidXNlcm5hbWUiOiJpbml0IiwiX192IjoiaW5pdCIsIl9pZCI6ImluaXQifSwic3RhdGVzIjp7Imlnbm9yZSI6e30sImRlZmF1bHQiOnt9LCJpbml0Ijp7Il9fdiI6dHJ1ZSwiZW1haWwiOnRydWUsInBhc3N3b3JkIjp0cnVlLCJ1c2VybmFtZSI6dHJ1ZSwiX2lkIjp0cnVlfSwibW9kaWZ5Ijp7fSwicmVxdWlyZSI6e319LCJzdGF0ZU5hbWVzIjpbInJlcXVpcmUiLCJtb2RpZnkiLCJpbml0IiwiZGVmYXVsdCIsImlnbm9yZSJdfSwiZW1pdHRlciI6eyJkb21haW4iOm51bGwsIl9ldmVudHMiOnt9LCJfZXZlbnRzQ291bnQiOjAsIl9tYXhMaXN0ZW5lcnMiOjB9fSwiaXNOZXciOmZhbHNlLCJfZG9jIjp7Il9fdiI6MCwiZW1haWwiOiJkb3VnbGFzLmdvZGVndWV6QGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiZWZhMzlkZDFkOSIsInVzZXJuYW1lIjoiYWRtaW4iLCJfaWQiOiI1OTFmMjMzYzY4ZDc4ZTYzY2MxZjFmOWIifSwiaWF0IjoxNDk1NDQ0MjA5LCJleHAiOjE0OTU0NDUxMDl9.rBQYRu2ibT4SN7NH1K1mkS6jImlRZPtVv1xvxNrQzNA',
+
++ Response 200 (application/json)
+        
+            {
+            "success": true,
+            "list": {
+                "_id": "5922ba39e16cce413176e133",
+                "_creator": "591f233c68d78e63cc1f1f9b",
+                "name": "LISTA TO TEST2",
+                "__v": 2,
+                "tasks": [
+                {
+                    "_id": "5922bf80e16cce413176e135",
+                    "_parent": "5922ba39e16cce413176e133",
+                    "description": "taskExists1",
+                    "__v": 0,
+                    "status": [
+                    "pending"
+                    ],
+                    "Created_date": "2017-05-22T10:37:52.721Z"
+                }
+                ]
+            }
+            }
+
++ Response 401 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Token expirou prazo de " + duration + " segundos."
+        }
+
++ Response 401 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Token inválido.."
+        }
+
++ Response 401 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Token não autenticado."
+        }
+
++ Response 401 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Token não encontrado."
+        }
+
++ Response 404 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Tarefa não encontrada."
+        }
+
++ Response 500 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Não foi possível encontrar esta tarefa."
+        }
+
++ Response 500 (application/json)
+        
+        {
+        "success": false,
+        "msg": "Não foi possível encontrar esta Lista."
+        }
+
+# Data Structures
+
+## User (object)
+A user from the system.
++ username: `admin` (string) - The username to be included
++ password: `admin` (string) - A password to protect the user.
++ email:    `admin@server.com` (string) - The user email.
+
+## List (object)
+A to-Do list from one user with zero-to-many tasks.
++ _creator: (User) - The user who the list belogs to.
++ name: `Lista1` (string) - The name of the list.
++ tasks: [(Task)] - Array of tasks.
+
+## Task (object)
+A task from a to-Do list.
++ _parent: (List) - The list the task belogs to.
++ description: `Create Documentation` (string) - The description of the task.
++ created_date: `2017-05-22T10:37:52.721Z` (Date) - The creation date of the task.
++ status: (enum["pending", "ongoing", "completed"]) - Current status of the Task.
