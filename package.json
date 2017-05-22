@@ -14,5 +14,10 @@
     "express": "^4.15.3",
     "jsonwebtoken": "^7.4.1",
     "mongoose": "^4.9.9"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "should": "^11.2.1",
+    "supertest": "^3.0.0"
   }
 }

@@ -8,8 +8,6 @@ var User = require('./User');
 
 // CREATES A NEW USER
 exports.createUser = function (req, res) {
-    console.log("PASSOU!");
-    console.log(req.body);
 
     req.body.password = cryptography.encrypt(req.body.password);
     User.create({
@@ -22,19 +20,17 @@ exports.createUser = function (req, res) {
                 if (11000 === err.code || 11001 === err.code) {
 	                return res.status(403).json({success: false, msg: "Dados inválidos."});
 	            }
-
                 return res.status(500).json({success: false, msg: "Houve um problema ao adicionar um Usuário ao Banco de Dados."});
             }
 	        
             //TODO Enviar e-mail avisando da criação do usuário
 
-            res.json({
+            return res.json({
                 success: true,
                 user: user 
             });
         }
     );
-
 }
 
 exports.login = function (req,res) {

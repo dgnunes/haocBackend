@@ -5,7 +5,6 @@ const key = 'theresnoplacelikehome';
 const duration = 15 * 60; //15 minutos
 
 exports.create = function (user){
-
   var tokenData = jwt.sign(user,key,{
     expiresIn: duration
   }); 
