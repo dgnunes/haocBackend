@@ -37,3 +37,17 @@ about the coding itself, I've implemented the bare minimum requirements:
 - Tasks can be created, read, updated and deleted.
 - Every task belongs to only one list and cannot be reallocated to another.
 
+Tests should be executed by the following command:
+
+mocha tests --recursive --watch
+
+Unfortunatelly I couldn't finish the Project as I intended for work reasons.
+
+I included my Postman tests as well in the file:
+testeMongo.postman_collection.json.
+
+What remained to be implemented:
+- Sending the User creation email;
+- Finishing Unit Testing for all resources.
+
+Thanks for the opportunity and may the force be with us.
